@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       marginVertical: 2.5
    },
-   text: { flex: 1, fontSize: 15, color: 'black' }
+   text: {
+      color: 'black',
+      flex: 1,
+      fontSize: 15
+   }
 });
 
 export default MovieCardText;
