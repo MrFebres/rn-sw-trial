@@ -1,3 +1,4 @@
+import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 
@@ -9,16 +10,9 @@ export default function _layout() {
          <Stack>
             <Stack.Screen
                name="index"
-               options={{
-                  title: 'Home'
-               }}
+               options={{ headerTitle: 'Star Wars Wiki', headerTitleAlign: 'center' }}
             />
-            <Stack.Screen
-               name="detail/index"
-               options={{
-                  title: 'Register'
-               }}
-            />
+            <Stack.Screen name="detail/index" options={{ title: 'Register' }} />
          </Stack>
       </QueryClientProvider>
    );
