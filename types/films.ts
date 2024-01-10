@@ -1,4 +1,4 @@
-export interface Films {
+export interface Film {
    characters: string[];
    created: Date;
    director: string;
@@ -11,6 +11,7 @@ export interface Films {
    species: string[];
    starships: string[];
    title: string;
+   uri?: string;
    url: string;
    vehicles: string[];
 }

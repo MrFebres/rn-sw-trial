@@ -4,7 +4,7 @@ import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
 
 import { ApiResponse, apiFetch } from '../services/api';
-import { Films } from '../types/films';
+import { Film } from '../types/films';
 import MovieCard from '../components/MovieCard';
 
 const episodes = {
@@ -17,7 +17,7 @@ const episodes = {
 };
 
 export default function Page() {
-   const { data, isLoading, isRefetching, refetch } = useQuery<ApiResponse<Films>>({
+   const { data, isLoading, isRefetching, refetch } = useQuery<ApiResponse<Film>>({
       queryFn: () => apiFetch('GET', 'films/'),
       queryKey: ['films'],
       refetchOnMount: false,
@@ -26,7 +26,7 @@ export default function Page() {
 
    if (isLoading) return <ActivityIndicator />;
 
-   const renderItem: ListRenderItem<Films> | null | undefined = ({ item }) => {
+   const renderItem: ListRenderItem<Film> | null | undefined = ({ item }) => {
       const uri = (episodes as any)[item.episode_id] as string;
 
       return <MovieCard film={item} uri={uri} />;

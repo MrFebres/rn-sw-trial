@@ -12,7 +12,17 @@ export default function _layout() {
                name="index"
                options={{ headerTitle: 'Star Wars Wiki', headerTitleAlign: 'center' }}
             />
-            <Stack.Screen name="detail/index" options={{ title: 'Register' }} />
+            <Stack.Screen
+               name="detail/index"
+               options={{
+                  headerTitle: '',
+                  headerTitleAlign: 'center',
+                  headerTitleStyle: {
+                     fontSize: 30,
+                     fontWeight: 'bold'
+                  }
+               }}
+            />
          </Stack>
       </QueryClientProvider>
    );

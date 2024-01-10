@@ -1,33 +1,38 @@
 import React, { FC } from 'react';
-import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import dayjs from 'dayjs';
 
-import { Films } from '../../types/films';
+import { Film } from '../../types/films';
 import MovieCardText from './MovieCardText';
 
 require('dayjs/locale/es');
 
 interface MovieCardProps {
-   film: Films;
+   film: Film;
    uri: string;
 }
 
 const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
+   const router = useRouter();
+
    return (
-      <View style={styles.container}>
-         <Image style={styles.card} resizeMode="stretch" source={{ uri }} />
-         <View style={{ flex: 1 }}>
-            <Text style={styles.titleText}>{film.title}</Text>
-            <MovieCardText label={'Director:'} text={film.director} />
-            <MovieCardText label={'Productor:'} text={film.producer} />
-            <MovieCardText
-               label={'Fecha de estreno:'}
-               text={dayjs(film.release_date, 'YYYY-MM-DD')
-                  .locale('es')
-                  .format('dddd, DD [de] MMMM [de] YYYY')}
-            />
+      <Pressable onPress={() => router.push({ pathname: 'detail', params: { ...film, uri } })}>
+         <View style={styles.container}>
+            <Image style={styles.card} resizeMode="stretch" source={{ uri }} />
+            <View style={{ flex: 1 }}>
+               <Text style={styles.titleText}>{film.title}</Text>
+               <MovieCardText label={'Director:'} text={film.director} />
+               <MovieCardText label={'Productor:'} text={film.producer} />
+               <MovieCardText
+                  label={'Fecha de estreno:'}
+                  text={dayjs(film.release_date, 'YYYY-MM-DD')
+                     .locale('es')
+                     .format('dddd, DD [de] MMMM [de] YYYY')}
+               />
+            </View>
          </View>
-      </View>
+      </Pressable>
    );
 };
 
