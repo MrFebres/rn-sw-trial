@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 
 import { Film } from '../../types/films';
 import MovieCardText from './MovieCardText';
+import { useMovieStore } from '../../context';
 
 require('dayjs/locale/es');
 
@@ -15,9 +16,14 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
    const router = useRouter();
+   const setCharacters = useMovieStore((state) => state.setSelectedCharacters);
 
    return (
-      <Pressable onPress={() => router.push({ pathname: 'detail', params: { ...film, uri } })}>
+      <Pressable
+         onPress={() => {
+            router.push({ pathname: 'detail', params: { ...film, uri } });
+            setCharacters(film.characters);
+         }}>
          <View style={styles.container}>
             <Image style={styles.card} resizeMode="stretch" source={{ uri }} />
             <View style={{ flex: 1 }}>

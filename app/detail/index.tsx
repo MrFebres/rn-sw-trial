@@ -4,6 +4,7 @@ import { useLocalSearchParams, useNavigation } from 'expo-router';
 import dayjs from 'dayjs';
 
 import { Film } from '../../types/films';
+import { useCharacterStore } from '../../hooks/useCharacterStore';
 import DetailRow from '../../components/DetailRow';
 
 require('dayjs/locale/es');
@@ -13,13 +14,15 @@ export default function Detail() {
    const film = params as unknown as Film;
    const navigation = useNavigation();
 
+   useCharacterStore();
+
+   const parseArrayString = (prop: string[]) =>
+      (prop as unknown as string).split(',').length.toString();
+
    useEffect(() => {
       const parent = navigation.getParent();
       parent?.setOptions({ headerTitle: film.title });
    }, [navigation]);
-
-   const parseArrayString = (prop: string[]) =>
-      (prop as unknown as string).split(',').length.toString();
 
    return (
       <View style={styles.mainView}>
