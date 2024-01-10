@@ -14,8 +14,12 @@ export default function Detail() {
    const navigation = useNavigation();
 
    useEffect(() => {
-      navigation.setOptions({ headerTitle: film.title });
+      const parent = navigation.getParent();
+      parent?.setOptions({ headerTitle: film.title });
    }, [navigation]);
+
+   const parseArrayString = (prop: string[]) =>
+      (prop as unknown as string).split(',').length.toString();
 
    return (
       <View style={styles.mainView}>
@@ -36,10 +40,10 @@ export default function Detail() {
                   </ScrollView>
                </View>
             </DetailRow>
-            <DetailRow label={'Personajes presentes:'} text={`${film.characters.length}`} />
-            <DetailRow label={'Planetas presentes:'} text={`${film.planets.length}`} />
-            <DetailRow label={'Especies presentes:'} text={`${film.species.length}`} />
-            <DetailRow label={'Naves presentes:'} text={`${film.starships.length}`} />
+            <DetailRow label={'Personajes presentes:'} text={parseArrayString(film.characters)} />
+            <DetailRow label={'Planetas presentes:'} text={parseArrayString(film.planets)} />
+            <DetailRow label={'Especies presentes:'} text={parseArrayString(film.species)} />
+            <DetailRow label={'Naves presentes:'} text={parseArrayString(film.starships)} />
          </ScrollView>
       </View>
    );

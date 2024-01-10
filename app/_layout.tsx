@@ -13,7 +13,7 @@ export default function _layout() {
                options={{ headerTitle: 'Star Wars Wiki', headerTitleAlign: 'center' }}
             />
             <Stack.Screen
-               name="detail/index"
+               name="detail"
                options={{
                   headerTitle: '',
                   headerTitleAlign: 'center',
