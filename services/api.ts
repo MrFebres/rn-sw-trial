@@ -2,14 +2,12 @@ import axios from 'axios';
 
 export type ApiResponse<T> = {
    count: number;
-   next: null;
-   previous: null;
+   next?: string;
+   previous?: string;
    results: T[];
 };
 
-const instance = axios.create({
-   baseURL: 'https://swapi.dev/api/'
-});
+const instance = axios.create({ baseURL: 'https://swapi.dev/api/' });
 
 export async function apiFetch(method: 'GET' | 'POST' | 'DELETE ', url: string, axiosConfig = {}) {
    const { data } = await instance({
