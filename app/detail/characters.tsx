@@ -7,7 +7,7 @@ import CharacterCard from '../../components/CharacterCard';
 
 const CharactersTab = () => {
    const characters = useMovieStore((state) => state.characters);
-   const isLoading = useMovieStore((state) => state.isLoadingPlanets);
+   const isLoading = useMovieStore((state) => state.isLoadingCharacters);
 
    if (isLoading) return <ActivityIndicator />;
 
