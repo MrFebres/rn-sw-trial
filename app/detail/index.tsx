@@ -3,11 +3,12 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import dayjs from 'dayjs';
 
+import { Character } from '../../types/characters';
 import { Film } from '../../types/films';
-import { useCharacterStore } from '../../hooks/useCharacterStore';
-import { usePlanetStore } from '../../hooks/usePlanetsStore';
-import { useSpeciesStore } from '../../hooks/useSpeciesStore';
-import { useStarshipStore } from '../../hooks/useStarshipStore';
+import { Planet } from '../../types/planets';
+import { Species } from '../../types/species';
+import { Starships } from '../../types/starships';
+import { useResourceStore } from '../../hooks/useResourceStore';
 import DetailRow from '../../components/DetailRow';
 
 require('dayjs/locale/es');
@@ -17,10 +18,30 @@ export default function Detail() {
    const film = params as unknown as Film;
    const navigation = useNavigation();
 
-   useCharacterStore();
-   usePlanetStore();
-   useSpeciesStore();
-   useStarshipStore();
+   useResourceStore<Character>({
+      add: 'addCharacters',
+      queryKey: 'people',
+      selected: 'selectedCharacters',
+      setLoader: 'setIsLoadingCharacters'
+   });
+   useResourceStore<Planet>({
+      add: 'addPlanets',
+      queryKey: 'planets',
+      selected: 'selectedPlanets',
+      setLoader: 'setIsLoadingPlanets'
+   });
+   useResourceStore<Species>({
+      add: 'addSpecies',
+      queryKey: 'species',
+      selected: 'selectedSpecies',
+      setLoader: 'setIsLoadingSpecies'
+   });
+   useResourceStore<Starships>({
+      add: 'addStarShips',
+      queryKey: 'starships',
+      selected: 'selectedStarShips',
+      setLoader: 'setIsLoadingSpecies'
+   });
 
    const parseArrayString = (prop: string[]) =>
       (prop as unknown as string).split(',').length.toString();
