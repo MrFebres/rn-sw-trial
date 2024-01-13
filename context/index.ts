@@ -1,13 +1,15 @@
 import { create } from 'zustand';
 
 import { createCharacterSlice, CharacterSlice } from './characterSlice';
+import { createPlanetsSlice, PlanetSlice } from './planetsSlice';
 import { createSpeciesSlice, SpeciesSlice } from './speciesSlice';
-import { PlanetSlice, createPlanetsSlice } from './planetsSlice';
+import { createStarShipsSlice, StarShipsSlice } from './starshipsSlice';
 
-type useMovieStoreType = CharacterSlice & PlanetSlice & SpeciesSlice;
+type useMovieStoreType = CharacterSlice & PlanetSlice & SpeciesSlice & StarShipsSlice;
 
 export const useMovieStore = create<useMovieStoreType>()((...a) => ({
    ...createCharacterSlice(...a),
    ...createPlanetsSlice(...a),
-   ...createSpeciesSlice(...a)
+   ...createSpeciesSlice(...a),
+   ...createStarShipsSlice(...a)
 }));
