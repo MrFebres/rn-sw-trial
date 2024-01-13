@@ -5,8 +5,10 @@ import { apiFetch } from '../../services/api';
 import { Character } from '../../types/characters';
 import { Film } from '../../types/films';
 import { Planet } from '../../types/planets';
+import { Starships } from '../../types/starships';
 import { useGetQueriesById } from '../../hooks/useGetFilmsById';
 import { useQuery } from '@tanstack/react-query';
+import { Vehicles } from '../../types/vehicles';
 import MovieCardText from '../MovieCard/MovieCardText';
 
 require('dayjs/locale/es');
@@ -20,7 +22,8 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
    const planetId = homeworldArr[homeworldArr.length - 2];
 
    const films = useGetQueriesById<Film>('films', character.films);
-   // const vehicles = useGetQueriesById<Film>('films', character.films);
+   const starships = useGetQueriesById<Starships>('starships', character.starships);
+   const vehicles = useGetQueriesById<Vehicles>('vehicles', character.vehicles);
 
    const { data: homeWorld } = useQuery<Planet>({
       queryKey: [`planets${planetId}`],
@@ -30,12 +33,12 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
       staleTime: Infinity
    });
 
-   const getFilmsName = (films: (Film | undefined)[]) =>
+   const getPropByName = (films: (any | undefined)[], prop: string) =>
       films
          ? films.reduce((acc, curr) => {
               if (!curr) return acc;
 
-              return `${acc}${curr.title}\n`;
+              return `${acc}${curr[prop]}\n`;
            }, '')
          : '';
 
@@ -46,6 +49,16 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
          <MovieCardText label={'Color de ojos:'} text={character.eye_color} />
          <MovieCardText label={'Estatura:'} text={character.height} />
          <MovieCardText label={'Género:'} text={character.gender} />
+         <MovieCardText
+            label={'Naves espaciales:'}
+            style={{ alignItems: 'flex-start' }}
+            text={getPropByName(starships, 'name') || '--'}
+         />
+         <MovieCardText
+            label={'Películas:'}
+            style={{ alignItems: 'flex-start' }}
+            text={getPropByName(films, 'title')}
+         />
          <MovieCardText label={'Peso:'} text={character.mass} />
          {homeWorld ? (
             <MovieCardText label={'Planeta natal:'} text={homeWorld!.name} />
@@ -53,9 +66,9 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
             <ActivityIndicator />
          )}
          <MovieCardText
-            label={'Películas:'}
+            label={'Vehículos:'}
             style={{ alignItems: 'flex-start' }}
-            text={getFilmsName(films)}
+            text={getPropByName(vehicles, 'name') || '--'}
          />
       </View>
    );
