@@ -8,7 +8,7 @@ import { apiFetch } from '../services/api';
 export const useCharacterStore = () => {
    const addCharacters = useMovieStore((state) => state.addCharacters);
    const selectedCharacters = useMovieStore((state) => state.selectedCharacters);
-   const setIsLoading = useMovieStore((state) => state.setIsLoadingPlanets);
+   const setIsLoading = useMovieStore((state) => state.setIsLoadingCharacters);
 
    const QUERY_KEY = 'people';
 

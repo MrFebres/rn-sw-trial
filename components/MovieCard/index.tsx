@@ -18,6 +18,7 @@ const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
    const router = useRouter();
    const setCharacters = useMovieStore((state) => state.setSelectedCharacters);
    const setPlanets = useMovieStore((state) => state.setSelectedPlanets);
+   const setSpecies = useMovieStore((state) => state.setSelectedSpecies);
 
    return (
       <Pressable
@@ -25,6 +26,7 @@ const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
             router.push({ pathname: 'detail', params: { ...film, uri } });
             setCharacters(film.characters);
             setPlanets(film.planets);
+            setSpecies(film.species);
          }}>
          <View style={styles.container}>
             <Image style={styles.card} resizeMode="stretch" source={{ uri }} />

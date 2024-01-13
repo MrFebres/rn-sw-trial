@@ -19,7 +19,7 @@ const SpeciesCard: FC<SpeciesCardProps> = ({ species }) => {
    const films = useGetQueriesById<Film>('films', species.films);
    const people = useGetQueriesById<Character>('people', species.people);
 
-   const homeWorld = useGetHomeWorld(species.homeworld);
+   const homeWorld = species.homeworld ? useGetHomeWorld(species.homeworld) : { name: 'n/a' };
 
    return (
       <View style={styles.container}>
@@ -41,11 +41,7 @@ const SpeciesCard: FC<SpeciesCardProps> = ({ species }) => {
             style={{ alignItems: 'flex-start' }}
             text={getPropByName(people, 'name') || '--'}
          />
-         {homeWorld ? (
-            <MovieCardText label={'Planeta natal:'} text={homeWorld!.name} />
-         ) : (
-            <ActivityIndicator />
-         )}
+         {homeWorld ? <MovieCardText label={'Planeta natal:'} text={homeWorld!.name} /> : null}
          <MovieCardText label={'Vida promedio:'} text={species.average_lifespan} />
       </View>
    );
