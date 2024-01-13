@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { UseQueryOptions, useQueries } from '@tanstack/react-query';
 
 import { useMovieStore } from '../context';
@@ -6,13 +7,12 @@ import { apiFetch } from '../services/api';
 
 export const useCharacterStore = () => {
    const addCharacters = useMovieStore((state) => state.addCharacters);
-   const isLoading = useMovieStore((state) => state.isLoadingPlanets);
    const selectedCharacters = useMovieStore((state) => state.selectedCharacters);
    const setIsLoading = useMovieStore((state) => state.setIsLoadingPlanets);
 
    const QUERY_KEY = 'people';
 
-   const result = useQueries({
+   const results = useQueries({
       queries: selectedCharacters.map<UseQueryOptions<Character>>((planet) => {
          const planetArr = planet.split('/');
          const characterId = planetArr[planetArr.length - 2];
@@ -29,13 +29,15 @@ export const useCharacterStore = () => {
       })
    });
 
-   if (result.some((person) => person.isLoading) && !isLoading) {
-      setIsLoading(true);
-   }
+   useEffect(() => {
+      if (results.some((person) => person.isLoading)) {
+         setIsLoading(true);
+      }
 
-   if (result.every((person) => person.isSuccess)) {
-      addCharacters(
-         new Map<String, Character>(result.map((person) => [person.data!.url, person.data!]))
-      );
-   }
+      if (results.every((person) => person.isSuccess)) {
+         addCharacters(
+            new Map<String, Character>(results.map((person) => [person.data!.url, person.data!]))
+         );
+      }
+   }, [results]);
 };

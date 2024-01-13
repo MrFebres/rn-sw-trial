@@ -4,8 +4,8 @@ import { useRouter } from 'expo-router';
 import dayjs from 'dayjs';
 
 import { Film } from '../../types/films';
-import MovieCardText from './MovieCardText';
 import { useMovieStore } from '../../context';
+import MovieCardText from './MovieCardText';
 
 require('dayjs/locale/es');
 
