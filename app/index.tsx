@@ -21,7 +21,8 @@ export default function Page() {
       queryFn: () => apiFetch('GET', 'films/'),
       queryKey: ['films'],
       refetchOnMount: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      staleTime: Infinity
    });
 
    if (isLoading) return <ActivityIndicator />;

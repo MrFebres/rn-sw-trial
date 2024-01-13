@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import dayjs from 'dayjs';
 
 import { Film } from '../../types/films';
+import { useMovieStore } from '../../context';
 import MovieCardText from './MovieCardText';
 
 require('dayjs/locale/es');
@@ -15,9 +16,20 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
    const router = useRouter();
+   const setCharacters = useMovieStore((state) => state.setSelectedCharacters);
+   const setPlanets = useMovieStore((state) => state.setSelectedPlanets);
+   const setSpecies = useMovieStore((state) => state.setSelectedSpecies);
+   const setStarships = useMovieStore((state) => state.setSelectedStarShips);
 
    return (
-      <Pressable onPress={() => router.push({ pathname: 'detail', params: { ...film, uri } })}>
+      <Pressable
+         onPress={() => {
+            router.push({ pathname: 'detail', params: { ...film, uri } });
+            setCharacters(film.characters);
+            setPlanets(film.planets);
+            setSpecies(film.species);
+            setStarships(film.starships);
+         }}>
          <View style={styles.container}>
             <Image style={styles.card} resizeMode="stretch" source={{ uri }} />
             <View style={{ flex: 1 }}>
