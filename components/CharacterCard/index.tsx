@@ -4,6 +4,7 @@ import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-nativ
 import { apiFetch } from '../../services/api';
 import { Character } from '../../types/characters';
 import { Film } from '../../types/films';
+import { getPropByName } from '../../utils/getPropByName';
 import { Planet } from '../../types/planets';
 import { Starships } from '../../types/starships';
 import { useGetQueriesById } from '../../hooks/useGetFilmsById';
@@ -32,15 +33,6 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
       refetchOnWindowFocus: false,
       staleTime: Infinity
    });
-
-   const getPropByName = (films: (any | undefined)[], prop: string) =>
-      films
-         ? films.reduce((acc, curr) => {
-              if (!curr) return acc;
-
-              return `${acc}${curr[prop]}\n`;
-           }, '')
-         : '';
 
    return (
       <View style={styles.container}>
