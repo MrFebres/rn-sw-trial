@@ -4,50 +4,53 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Character } from '../../types/characters';
 import { Film } from '../../types/films';
 import { getPropByName } from '../../utils/getPropByName';
-import { Species } from '../../types/species';
-import { useGetHomeWorld } from '../../hooks/useGetHomeWorld';
+import { Starships } from '../../types/starships';
 import { useGetQueriesById } from '../../hooks/useGetFilmsById';
 import MovieCardText from '../MovieCard/MovieCardText';
 
 require('dayjs/locale/es');
 
-interface SpeciesCardProps {
-   species: Species;
+interface StarShipCardProps {
+   starship: Starships;
 }
 
-const SpeciesCard: FC<SpeciesCardProps> = ({ species }) => {
-   const films = useGetQueriesById<Film>('films', species.films);
-   const people = useGetQueriesById<Character>('people', species.people);
-
-   const homeWorld = species.homeworld ? useGetHomeWorld(species.homeworld) : { name: 'n/a' };
+const StarShipCard: FC<StarShipCardProps> = ({ starship }) => {
+   const films = useGetQueriesById<Film>('films', starship.films);
+   const people = useGetQueriesById<Character>('people', starship.pilots);
 
    return (
       <View style={styles.container}>
-         <Text style={styles.titleText}>{species.name}</Text>
-         <MovieCardText label={'Altura promedio:'} text={species.average_height} />
-         <MovieCardText label={'Clasificación:'} text={species.classification} />
-         <MovieCardText label={'Color de cabello:'} text={species.hair_colors} />
-         <MovieCardText label={'Color de ojos:'} text={species.eye_colors} />
-         <MovieCardText label={'Color de piel:'} text={species.skin_colors} />
-         <MovieCardText label={'Designación:'} text={species.designation} />
-         <MovieCardText label={'Lenguaje:'} text={species.language} />
+         <Text style={styles.titleText}>{starship.name}</Text>
+         <MovieCardText label={'Capacidad de carga:'} text={starship.cargo_capacity} />
+         <MovieCardText label={'Clase:'} text={starship.starship_class} />
+         <MovieCardText label={'Consumibles:'} text={starship.consumables} />
+         <MovieCardText label={'Costo en créditos:'} text={starship.cost_in_credits} />
+         <MovieCardText label={'Longitud:'} text={starship.length} />
+         <MovieCardText label={'Manufactura:'} text={starship.manufacturer} />
+         <MovieCardText label={'Máxima velocidad:'} text={starship.max_atmosphering_speed} />
+         <MovieCardText label={'MGLT:'} text={starship.MGLT} />
+         <MovieCardText label={'Modelo:'} text={starship.model} />
+         <MovieCardText label={'Pasajeros:'} text={starship.passengers} />
          <MovieCardText
             label={'Películas:'}
             style={{ alignItems: 'flex-start' }}
-            text={getPropByName(films, 'title')}
+            text={getPropByName(films, 'title') || '--'}
          />
          <MovieCardText
-            label={'Personajes:'}
+            label={'Pilotos:'}
             style={{ alignItems: 'flex-start' }}
             text={getPropByName(people, 'name') || '--'}
          />
-         {homeWorld ? <MovieCardText label={'Planeta natal:'} text={homeWorld!.name} /> : null}
-         <MovieCardText label={'Vida promedio:'} text={species.average_lifespan} />
+         <MovieCardText label={'Tripulación:'} text={starship.crew} />
+         <MovieCardText
+            label={'Valoración de hiper propulsor:'}
+            text={starship.hyperdrive_rating}
+         />
       </View>
    );
 };
 
-export default SpeciesCard;
+export default StarShipCard;
 
 const styles = StyleSheet.create({
    container: {

@@ -19,6 +19,7 @@ const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
    const setCharacters = useMovieStore((state) => state.setSelectedCharacters);
    const setPlanets = useMovieStore((state) => state.setSelectedPlanets);
    const setSpecies = useMovieStore((state) => state.setSelectedSpecies);
+   const setStarships = useMovieStore((state) => state.setSelectedStarShips);
 
    return (
       <Pressable
@@ -27,6 +28,7 @@ const MovieCard: FC<MovieCardProps> = ({ film, uri }) => {
             setCharacters(film.characters);
             setPlanets(film.planets);
             setSpecies(film.species);
+            setStarships(film.starships);
          }}>
          <View style={styles.container}>
             <Image style={styles.card} resizeMode="stretch" source={{ uri }} />
