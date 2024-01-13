@@ -6,9 +6,9 @@ import { apiFetch } from '../services/api';
 
 export const useCharacterStore = () => {
    const addCharacters = useMovieStore((state) => state.addCharacters);
-   const isLoading = useMovieStore((state) => state.isLoading);
+   const isLoading = useMovieStore((state) => state.isLoadingPlanets);
    const selectedCharacters = useMovieStore((state) => state.selectedCharacters);
-   const setIsLoading = useMovieStore((state) => state.setIsLoading);
+   const setIsLoading = useMovieStore((state) => state.setIsLoadingPlanets);
 
    const result = useQueries({
       queries: selectedCharacters.map<UseQueryOptions<Character>>((planet) => {
@@ -21,7 +21,8 @@ export const useCharacterStore = () => {
             queryKey: [`planet${planetId}`],
             refetchOnMount: false,
             refetchOnReconnect: false,
-            refetchOnWindowFocus: false
+            refetchOnWindowFocus: false,
+            staleTime: Infinity
          };
       })
    });

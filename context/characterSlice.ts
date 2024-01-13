@@ -5,9 +5,9 @@ import { Character } from '../types/characters';
 export interface CharacterSlice {
    addCharacters: (characterList: Map<String, Character>) => void;
    characters: Map<String, Character>;
-   isLoading: boolean;
+   isLoadingCharacters: boolean;
    selectedCharacters: string[];
-   setIsLoading: (isLoading: boolean) => void;
+   setIsLoadingCharacters: (isLoading: boolean) => void;
    setSelectedCharacters: (selectedItems: string[]) => void;
 }
 
@@ -15,11 +15,14 @@ export const createCharacterSlice: StateCreator<CharacterSlice, [], [], Characte
    set
 ) => ({
    addCharacters: (characterList: Map<String, Character>) =>
-      set(() => ({ characters: new Map<String, Character>(characterList), isLoading: false })),
+      set(() => ({
+         characters: new Map<String, Character>(characterList),
+         isLoadingCharacters: false
+      })),
    characters: new Map<String, Character>(),
-   isLoading: false,
+   isLoadingCharacters: false,
    selectedCharacters: [],
-   setIsLoading: (isLoading) => set(() => ({ isLoading })),
+   setIsLoadingCharacters: (isLoading) => set(() => ({ isLoadingCharacters: isLoading })),
    setSelectedCharacters: (selectedCharacters) =>
       set(() => ({ selectedCharacters, characters: new Map<String, Character>() }))
 });
