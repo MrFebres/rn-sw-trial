@@ -5,9 +5,9 @@ import { createPlanetsSlice, PlanetSlice } from './planetsSlice';
 import { createSpeciesSlice, SpeciesSlice } from './speciesSlice';
 import { createStarShipsSlice, StarShipsSlice } from './starshipsSlice';
 
-type useMovieStoreType = CharacterSlice & PlanetSlice & SpeciesSlice & StarShipsSlice;
+export type UseMovieStoreType = CharacterSlice & PlanetSlice & SpeciesSlice & StarShipsSlice;
 
-export const useMovieStore = create<useMovieStoreType>()((...a) => ({
+export const useMovieStore = create<UseMovieStoreType>()((...a) => ({
    ...createCharacterSlice(...a),
    ...createPlanetsSlice(...a),
    ...createSpeciesSlice(...a),
