@@ -4,58 +4,54 @@ import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-nativ
 import { Character } from '../../types/characters';
 import { Film } from '../../types/films';
 import { getPropByName } from '../../utils/getPropByName';
-import { Starships } from '../../types/starships';
+import { Species } from '../../types/species';
 import { useGetHomeWorld } from '../../hooks/useGetHomeWorld';
 import { useGetQueriesById } from '../../hooks/useGetFilmsById';
-import { Vehicles } from '../../types/vehicles';
 import MovieCardText from '../MovieCard/MovieCardText';
 
 require('dayjs/locale/es');
 
-interface CharacterCardProps {
-   character: Character;
+interface SpeciesCardProps {
+   species: Species;
 }
 
-const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
-   const films = useGetQueriesById<Film>('films', character.films);
-   const starships = useGetQueriesById<Starships>('starships', character.starships);
-   const vehicles = useGetQueriesById<Vehicles>('vehicles', character.vehicles);
+const SpeciesCard: FC<SpeciesCardProps> = ({ species }) => {
+   const films = useGetQueriesById<Film>('films', species.films);
+   const people = useGetQueriesById<Character>('people', species.people);
 
-   const homeWorld = useGetHomeWorld(character.homeworld);
+   const homeWorld = useGetHomeWorld(species.homeworld);
 
    return (
       <View style={styles.container}>
-         <Text style={styles.titleText}>{character.name}</Text>
-         <MovieCardText label={'Color de cabello:'} text={character.hair_color} />
-         <MovieCardText label={'Color de ojos:'} text={character.eye_color} />
-         <MovieCardText label={'Estatura:'} text={character.height} />
-         <MovieCardText label={'Género:'} text={character.gender} />
-         <MovieCardText
-            label={'Naves espaciales:'}
-            style={{ alignItems: 'flex-start' }}
-            text={getPropByName(starships, 'name') || '--'}
-         />
+         <Text style={styles.titleText}>{species.name}</Text>
+         <MovieCardText label={'Altura promedio:'} text={species.average_height} />
+         <MovieCardText label={'Clasificación:'} text={species.classification} />
+         <MovieCardText label={'Color de cabello:'} text={species.hair_colors} />
+         <MovieCardText label={'Color de ojos:'} text={species.eye_colors} />
+         <MovieCardText label={'Color de piel:'} text={species.skin_colors} />
+         <MovieCardText label={'Designación:'} text={species.designation} />
+         <MovieCardText label={'Lenguaje:'} text={species.language} />
          <MovieCardText
             label={'Películas:'}
             style={{ alignItems: 'flex-start' }}
             text={getPropByName(films, 'title')}
          />
-         <MovieCardText label={'Peso:'} text={character.mass} />
+         <MovieCardText
+            label={'Personajes:'}
+            style={{ alignItems: 'flex-start' }}
+            text={getPropByName(people, 'name') || '--'}
+         />
          {homeWorld ? (
             <MovieCardText label={'Planeta natal:'} text={homeWorld!.name} />
          ) : (
             <ActivityIndicator />
          )}
-         <MovieCardText
-            label={'Vehículos:'}
-            style={{ alignItems: 'flex-start' }}
-            text={getPropByName(vehicles, 'name') || '--'}
-         />
+         <MovieCardText label={'Vida promedio:'} text={species.average_lifespan} />
       </View>
    );
 };
 
-export default CharacterCard;
+export default SpeciesCard;
 
 const styles = StyleSheet.create({
    container: {
