@@ -35,9 +35,7 @@ export const useCharacterStore = () => {
       }
 
       if (results.every((person) => person.isSuccess)) {
-         addCharacters(
-            new Map<String, Character>(results.map((person) => [person.data!.url, person.data!]))
-         );
+         addCharacters(new Map<String, Character>(results.map(({ data }) => [data!.url, data!])));
       }
    }, [results]);
 };
