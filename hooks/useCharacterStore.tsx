@@ -10,15 +10,17 @@ export const useCharacterStore = () => {
    const selectedCharacters = useMovieStore((state) => state.selectedCharacters);
    const setIsLoading = useMovieStore((state) => state.setIsLoadingPlanets);
 
+   const QUERY_KEY = 'people';
+
    const result = useQueries({
       queries: selectedCharacters.map<UseQueryOptions<Character>>((planet) => {
          const planetArr = planet.split('/');
-         const planetId = planetArr[planetArr.length - 2];
+         const characterId = planetArr[planetArr.length - 2];
 
          return {
             enabled: selectedCharacters.length > 0,
-            queryFn: () => apiFetch('GET', `people/${planetId}/`),
-            queryKey: [`planet${planetId}`],
+            queryFn: () => apiFetch('GET', `${QUERY_KEY}/${characterId}/`),
+            queryKey: [`${QUERY_KEY}${characterId}`],
             refetchOnMount: false,
             refetchOnReconnect: false,
             refetchOnWindowFocus: false,
@@ -32,8 +34,6 @@ export const useCharacterStore = () => {
    }
 
    if (result.every((person) => person.isSuccess)) {
-      console.log('[GOT HERE]');
-
       addCharacters(
          new Map<String, Character>(result.map((person) => [person.data!.url, person.data!]))
       );

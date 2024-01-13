@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 
 interface MovieCardTextProps {
    label: string;
+   style?: StyleProp<ViewStyle>;
    text: string;
 }
 
-const MovieCardText: FC<MovieCardTextProps> = ({ label, text }) => {
+const MovieCardText: FC<MovieCardTextProps> = ({ label, style, text }) => {
    return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
          <Text style={[styles.text, { fontWeight: 'bold' }]}>{label}</Text>
          <Text style={styles.text}>{text}</Text>
       </View>
